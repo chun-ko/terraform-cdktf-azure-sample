@@ -1,0 +1,13 @@
+{
+  "version": "0.13.2",
+  "stacks": {
+    "terraform-az": {
+      "name": "terraform-az",
+      "constructPath": "terraform-az",
+      "workingDirectory": "stacks/terraform-az",
+      "synthesizedStackPath": "stacks/terraform-az/cdk.tf.json",
+      "annotations": [],
+      "dependencies": []
+    }
+  }
+}

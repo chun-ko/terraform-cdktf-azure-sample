@@ -1,0 +1,135 @@
+{
+  "//": {
+    "metadata": {
+      "backend": "local",
+      "stackName": "terraform-az",
+      "version": "0.13.2"
+    },
+    "outputs": {
+    }
+  },
+  "provider": {
+    "azurerm": [
+      {
+        "features": {
+          "virtual_machine": {
+            "delete_os_disk_on_deletion": true
+          }
+        }
+      }
+    ]
+  },
+  "resource": {
+    "azurerm_linux_virtual_machine": {
+      "Web-Server": {
+        "//": {
+          "metadata": {
+            "path": "terraform-az/Web-Server",
+            "uniqueId": "Web-Server"
+          }
+        },
+        "admin_ssh_key": [
+          {
+            "public_key": "ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAlR+6cwU+0Wa0jWxLDV2fY4JYGVK9+hVCn13QclVgNkHyBidIZ0pJ/0AcOUa9mjm7mJPUb/orzA2g3CxMdweHjOTcTlGxbiuxdFgZHAmwV3v0CYKeyXbkJdqVYlw5E4sA2inJ7ivL7QTJOf2/sPcBZ3y4nhNETxnUSaxLPGOOJaD5gBFqJefcULK4M7XiQpmA18KJJha7j6MBm9Oe18sphS5JzR2lJ9RQ8bd7MtP/AVqxwkdMMlGM1uGD7UfKKKua7HZfcJJrKY0a6CVtljkJz4X+OkPjfAx1j/uUV1umXxDUMChgHztNVDan2+D8JX+c6im0WxM6jzbcPc4ooBUtvQ==",
+            "username": "redbelly"
+          }
+        ],
+        "admin_username": "redbelly",
+        "location": "${azurerm_resource_group.rg-example.location}",
+        "name": "Web-App-1",
+        "network_interface_ids": [
+          "${azurerm_network_interface.ni-example.id}"
+        ],
+        "os_disk": {
+          "caching": "ReadWrite",
+          "storage_account_type": "Standard_LRS"
+        },
+        "resource_group_name": "${azurerm_resource_group.rg-example.name}",
+        "size": "Standard_DS1_v2",
+        "source_image_reference": {
+          "offer": "0001-com-ubuntu-server-focal",
+          "publisher": "Canonical",
+          "sku": "20_04-lts-gen2",
+          "version": "latest"
+        }
+      }
+    },
+    "azurerm_network_interface": {
+      "ni-example": {
+        "//": {
+          "metadata": {
+            "path": "terraform-az/ni-example",
+            "uniqueId": "ni-example"
+          }
+        },
+        "ip_configuration": [
+          {
+            "name": "internal",
+            "private_ip_address_allocation": "Dynamic",
+            "subnet_id": "${azurerm_subnet.subnet-example.id}"
+          }
+        ],
+        "location": "${azurerm_resource_group.rg-example.location}",
+        "name": "example-nic",
+        "resource_group_name": "${azurerm_resource_group.rg-example.name}"
+      }
+    },
+    "azurerm_resource_group": {
+      "rg-example": {
+        "//": {
+          "metadata": {
+            "path": "terraform-az/rg-example",
+            "uniqueId": "rg-example"
+          }
+        },
+        "location": "eastus",
+        "name": "example-resource-group"
+      }
+    },
+    "azurerm_subnet": {
+      "subnet-example": {
+        "//": {
+          "metadata": {
+            "path": "terraform-az/subnet-example",
+            "uniqueId": "subnet-example"
+          }
+        },
+        "address_prefixes": [
+          "10.0.2.0/24"
+        ],
+        "name": "example-subnet",
+        "resource_group_name": "${azurerm_resource_group.rg-example.name}",
+        "virtual_network_name": "${azurerm_virtual_network.vnet-example.name}"
+      }
+    },
+    "azurerm_virtual_network": {
+      "vnet-example": {
+        "//": {
+          "metadata": {
+            "path": "terraform-az/vnet-example",
+            "uniqueId": "vnet-example"
+          }
+        },
+        "address_space": [
+          "10.0.0.0/16"
+        ],
+        "location": "${azurerm_resource_group.rg-example.location}",
+        "name": "example-network",
+        "resource_group_name": "${azurerm_resource_group.rg-example.name}"
+      }
+    }
+  },
+  "terraform": {
+    "backend": {
+      "local": {
+        "path": "/Users/chunko/code/terraform-az/terraform.terraform-az.tfstate"
+      }
+    },
+    "required_providers": {
+      "azurerm": {
+        "source": "azurerm",
+        "version": "3.28.0"
+      }
+    }
+  }
+}
